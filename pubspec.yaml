@@ -1,0 +1,37 @@
+name: nova_education
+
+description: Nova education app.
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+
+  sdk: ^3.0.0
+
+dependencies:
+
+  flutter:
+
+    sdk: flutter
+
+  shared_preferences: ^2.2.2
+
+  firebase_core: ^2.30.0
+
+  cloud_firestore: ^4.17.0
+  
+  flutter_tts: ^3.8.5
+
+dev_dependencies:
+
+  flutter_test:
+
+    sdk: flutter
+
+  flutter_lints: ^4.0.0
+
+flutter:
+
+  uses-material-design: true

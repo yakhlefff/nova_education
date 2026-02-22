@@ -1,0 +1,57 @@
+{
+
+  "project_info": {
+
+    "project_number": "962775799758",
+
+    "project_id": "nova-education-779af",
+
+    "storage_bucket": "nova-education-779af.firebasestorage.app"
+
+  },
+
+  "client": [
+
+    {
+
+      "client_info": {
+
+        "mobilesdk_app_id": "1:962775799758:android:688dd1ca775ae573817d9f",
+
+        "android_client_info": {
+
+          "package_name": "com.nova.education"
+
+        }
+
+      },
+
+      "oauth_client": [],
+
+      "api_key": [
+
+        {
+
+          "current_key": "AIzaSyBMomm6AepD2FaBSglx0Ga7Ta0TyPINfJw"
+
+        }
+
+      ],
+
+      "services": {
+
+        "appinvite_service": {
+
+          "other_platform_oauth_client": []
+
+        }
+
+      }
+
+    }
+
+  ],
+
+  "configuration_version": "1"
+
+}
