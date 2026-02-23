@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'numbers_learn_screen.dart';
 //الجمع
 import 'add_game_screen.dart';
+//القسمتة
+import 'sub_game_screen.dart';
+//الضرب
+import 'mul_game_screen.dart';
 
 class MathHomeScreen extends StatelessWidget {
 
@@ -137,18 +141,18 @@ class MathHomeScreen extends StatelessWidget {
             const SizedBox(height: 12),
 
             _btn(context, "➖ ${t("sub")}", () {
-
-              _toast(context, t("soon"));
-
-            }),
+  Navigator.push(context, MaterialPageRoute(
+    builder: (_) => SubGameScreen(languageCode: languageCode),
+  ));
+}),
 
             const SizedBox(height: 12),
 
             _btn(context, "✖️ ${t("mul")}", () {
-
-              _toast(context, t("soon"));
-
-            }),
+  Navigator.push(context, MaterialPageRoute(
+    builder: (_) => MulGameScreen(languageCode: languageCode),
+  ));
+}),
 
           ],
 
