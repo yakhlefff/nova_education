@@ -29,6 +29,7 @@ class _AddGameScreenState extends State<AddGameScreen> {
   bool _locked = false;
   int? _picked;
   bool _showAnswer = true;
+  bool _correct = false; // ✅ FIX
 
   static const int _needCorrectToPass = 10;
 
@@ -66,6 +67,7 @@ class _AddGameScreenState extends State<AddGameScreen> {
       "wrong": "خطأ",
       "reset": "تصفير التقدم",
       "close": "إغلاق",
+      "show": "الجواب الصحيح هو",
     };
 
     final fr = {
@@ -86,6 +88,7 @@ class _AddGameScreenState extends State<AddGameScreen> {
       "wrong": "Faux",
       "reset": "Réinitialiser",
       "close": "Fermer",
+      "show": "La bonne réponse est",
     };
 
     final en = {
@@ -106,6 +109,7 @@ class _AddGameScreenState extends State<AddGameScreen> {
       "wrong": "Wrong",
       "reset": "Reset progress",
       "close": "Close",
+      "show": "Correct answer is",
     };
 
     final map = widget.languageCode == "ar"
@@ -117,24 +121,22 @@ class _AddGameScreenState extends State<AddGameScreen> {
     return map[key] ?? key;
   }
 
-  // ✅ كل Level كيبدّل Range و عدد الخيارات
   int _maxForLevel(int level) {
     switch (level) {
       case 1:
-        return 9; // 0..9
+        return 9;
       case 2:
-        return 20; // 0..20
+        return 20;
       case 3:
-        return 50; // 0..50
+        return 50;
       case 4:
-        return 100; // 0..100
+        return 100;
       default:
         return 200;
     }
   }
 
   int _choicesCountForLevel(int level) {
-    // تدرج choices: 2 ثم 3 ثم 4 ثم 4 ثم 4
     if (level == 1) return 2;
     if (level == 2) return 3;
     return 4;
@@ -229,7 +231,7 @@ class _AddGameScreenState extends State<AddGameScreen> {
     final set = <int>{_answer};
 
     while (set.length < count) {
-      final delta = _rng.nextInt(9) - 4; // -4..+4
+      final delta = _rng.nextInt(9) - 4;
       final int candidate = math.max(0, _answer + delta);
       set.add(candidate);
     }
@@ -237,6 +239,7 @@ class _AddGameScreenState extends State<AddGameScreen> {
     _choices = set.toList()..shuffle(_rng);
     _locked = false;
     _picked = null;
+    _correct = false; // ✅ FIX
 
     setState(() {});
   }
@@ -249,6 +252,8 @@ class _AddGameScreenState extends State<AddGameScreen> {
     setState(() {
       _locked = true;
       _picked = v;
+      _correct = ok; // ✅ FIX
+
       if (ok) {
         _score++;
         _levelCorrect++;
@@ -260,13 +265,11 @@ class _AddGameScreenState extends State<AddGameScreen> {
     await _incStats(ok: ok);
     await _saveProgress();
 
-    // ✅ صوت تشجيع Hybrid
     await HybridFeedbackService.I.playFeedback(
       languageCode: widget.languageCode,
       correct: ok,
     );
 
-    // ✅ pass level
     if (ok && _levelCorrect >= _needCorrectToPass) {
       setState(() {
         _stars++;
@@ -281,9 +284,7 @@ class _AddGameScreenState extends State<AddGameScreen> {
     }
   }
 
-  void _next() {
-    _newQuestion();
-  }
+  void _next() => _newQuestion();
 
   Color? _choiceBg(int v) {
     if (!_locked) return null;
@@ -378,7 +379,6 @@ class _AddGameScreenState extends State<AddGameScreen> {
 
             const SizedBox(height: 14),
 
-            // ✅ Card
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
